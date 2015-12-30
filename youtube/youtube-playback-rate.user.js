@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         YouTube Default Playback Rate
 // @namespace    http://alexhowes.co.uk/
-// @version      1.0
-// @description  Sets default playback rate based what it was last changed to
+// @version      1.0.1
+// @description  Sets default playback rate
 // @author       Alex Howes
 // @match        https://www.youtube.com/watch?v=*
 // @grant        none
@@ -13,13 +13,22 @@
 
 
 $(document).ready(function(){
-
-    window.ahOnPlaybackRateChange = function () {
-        setCookie('speed', document.getElementById('movie_player').getPlaybackRate(), 365);
-    };
+    $('body').on('click', '.ytp-menuitem', function(){
+        var text = $(this).text();
+        if(text == '0.25' || text == '0.5' || text == 'Normal' || text == '1.5' || text == '2') {
+           if( text == 'Normal') {
+               text = '1';
+           }
+           setCookie('speed', text, 365);
+        }
+    });
 
     isPlayerThere();
 });
+
+window.ahOnPlaybackRateChange = function() {
+    document.getElementById('movie_player').setPlaybackRate(getCookie('speed'));
+}
 
 function isPlayerThere() {
     if (!document.getElementById('movie_player')) {
