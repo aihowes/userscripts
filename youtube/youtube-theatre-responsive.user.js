@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         YouTube Responsive & Better Cinema Mode
 // @namespace    http://alexhowes.co.uk/
-// @version      1.0.1
+// @version      1.0.2
 // @description  Makes YouTube a bit more responsive and makes cinema mode fit the viewport width
 // @author       Alex Howes
 // @match        https://www.youtube.com/watch?v=*
@@ -13,6 +13,9 @@
 window.matchMedia = null;
 
 var output = "<style> " +
+    ".ytp-cards-button { " +
+        "top: 0; " +
+    "} " +
     "#placeholder-player, #theater-background { " +
         "display: none; " +
     "} " +
