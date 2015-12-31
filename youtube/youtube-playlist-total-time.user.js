@@ -2,7 +2,7 @@
 // @name         Youtube Playlist Total Time
 // @namespace    http://alexhowes.co.uk/
 // @version      1.0
-// @description  Gets length of each video in the playlist and displays it in the playlist details.
+// @description  Gets total playlist time length and displays in playlist details
 // @author       Alex Howes
 // @match        https://www.youtube.com/playlist?*
 // @grant        none
@@ -50,18 +50,39 @@ function fixTotalTime() {
 }
 
 function printTotalTime() {
-    console.log(totalTime);
     $('.pl-header-details').append("<li><span class='timestamp'>Total Time: "+totalTime+"</span></li>");
 }
 
-$(document).ready(function(){
+function startLoopingThrough() {
     $('.timestamp span').each(function(){
         var thisTime = getMinutesAndSeconds($(this).html());
         totalMinutes = totalMinutes + parseInt(thisTime[0], 10);
         totalSeconds = totalSeconds + parseInt(thisTime[1], 10);
     });
+}
 
-    fixTotalTime();
-    printTotalTime();
+function numberOfVideosLoaded() {
+    return $('.timestamp span').size();
+}
+
+function numberOfTotalVideos() {
+    arrayText = $('.pl-header-details li:nth-child(2)').text().split(' ');
+    return arrayText[0];
+}
+
+function startHere() {
+    if (numberOfVideosLoaded() == numberOfTotalVideos()) {
+        startLoopingThrough();
+        fixTotalTime();
+        printTotalTime();
+        clearTimeout(startHere);
+    } else {
+        $('.load-more-button').click();
+        setTimeout(startHere, 500);
+    }
+}
+
+$(document).ready(function(){
+    $('.load-more-button').removeAttr('onclick');
+    startHere();
 });
-
