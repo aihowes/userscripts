@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Youtube Playlist Total Time
 // @namespace    http://alexhowes.co.uk/
-// @version      1.0
+// @version      1.0.1
 // @description  Gets total playlist time length and displays in playlist details
 // @author       Alex Howes
 // @match        https://www.youtube.com/playlist?*
