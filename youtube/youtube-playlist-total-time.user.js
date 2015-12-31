@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Youtube Playlist Total Time
 // @namespace    http://alexhowes.co.uk/
-// @version      1.0.1
+// @version      1.0.2
 // @description  Gets total playlist time length and displays in playlist details
 // @author       Alex Howes
 // @match        https://www.youtube.com/playlist?*
@@ -71,18 +71,23 @@ function numberOfTotalVideos() {
 }
 
 function startHere() {
+    $('.load-more-button').removeAttr('onclick');
     if (numberOfVideosLoaded() == numberOfTotalVideos()) {
         startLoopingThrough();
         fixTotalTime();
         printTotalTime();
         clearTimeout(startHere);
     } else {
-        $('.load-more-button').click();
-        setTimeout(startHere, 500);
+        window.ytplaylisttimeout_i++;
+        if (window.ytplaylisttimeout_i <= 40) {
+            $('.load-more-button').click();
+            setTimeout(startHere, 250);
+        }
     }
 }
 
 $(document).ready(function(){
+    window.ytplaylisttimeout_i = 0;
     $('.load-more-button').removeAttr('onclick');
     startHere();
 });
