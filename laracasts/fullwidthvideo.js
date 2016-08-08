@@ -2,7 +2,7 @@
 // @name         Laracasts - Full Width Video
 // @namespace    http://tampermonkey.net/
 // @version      1.0
-// @description  try to take over the world!
+// @description  Makes the Laracasts video player take up the full viewport.
 // @author       You
 // @match        https://laracasts.com/*
 // @grant        none
